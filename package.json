@@ -1,0 +1,29 @@
+{
+  "name": "reviews_api",
+  "version": "1.0.0",
+  "description": "A service that will serve data to the Reviews Widget",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/terramuse-tiramisu/ReviewsAPI.git"
+  },
+  "keywords": [
+    "reviews"
+  ],
+  "author": "Zachary Realberg",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/terramuse-tiramisu/ReviewsAPI/issues"
+  },
+  "homepage": "https://github.com/terramuse-tiramisu/ReviewsAPI#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "lodash": "^4.17.20",
+    "nodemon": "^2.0.7"
+  }
+}
