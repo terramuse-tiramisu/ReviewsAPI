@@ -6,52 +6,76 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   console.log('were connected, but what does it mean');
-  const reviewsSchema = new Schema({
-    review_id:  Number,
-    product_id: Number,
-    rating: Number,
-    summary:   String,
-    recommend: Boolean,
-    response: String,
-    body: String,
-    date: String,
-    reviewer_name: String,
-    helpfulness:  Number,
-    Photos: [{id: Number, url: String}],
-    name: String,
-    email: String,
-    characteristics: {
-      “14”: Number,
-      “15”: Number,
-      “16”: Number,
-      “17”: Number,
-      “18”: Number,
-      “19”: Number
-    },
-    Report_count: Number
-      });
-    const reviews_meta = new Schema({
-    product_id: Number,
-    ratings: {
-      “1”: Number,
-      “2”: Number,
-      “3”: Number,
-      “4”: Number,
-      “5”: Number
-    },
-    recommend:  {
-            0: Number,
-            1: Number
-    },
-    characteristics: {
-      Size: {id: Number, value: Number},
-      Width: {id: Number, value: Number},
-      Comfort: {id: Number, value: Number},
-      Quality: {id: Number, value: Number},
-      Length: {id: Number, value: Number},
-              Fit: {id: Number, value: Number}
-    },
-      });
-
 });
-let Reviews = mongoose.model('Reviews', reviewsSchema);
+
+const reviewsSchema = new mongoose.Schema({
+  "id" : Number,
+  "product_id" : Number,
+  "rating" : Number,
+  "date" : String,
+  "summary" : String,
+  "body" : String,
+  "recommend" : Boolean,
+  "reported" : Boolean,
+  "reviewer_name" : String,
+  "reviewer_email" : String,
+  "response" : String,
+  "helpfulness" : Number
+});
+
+const reviewsPhotosSchema = new mongoose.Schema({
+  "_id" : String,
+  "id" : Number,
+  "review_id" : Number,
+  "url" : String
+});
+
+const characteristicsSchema = new mongoose.Schema({
+  "_id" : String,
+  "id" : Number,
+  "product_id" : Number,
+  "name" : String
+});
+
+const characteristicViewSchema = mongoose.model(
+  "_id" : String,
+  "id" : Number,
+  "characteristic_id" : Number,
+  "review_id" : Number,
+  "value" : Number
+);
+
+//creating models for my four collections
+const Reviews = mongoose.model(
+  'Reviews',
+  reviewsSchema,
+  'reviews'
+);
+
+const ReviewsPhotos = mongoose.model(
+  'ReviewsPhotos',
+  reviewsPhotosSchema,
+  'reviewsPhotos'
+);
+
+const Characteristics = mongoose.model(
+  'Characteristics',
+  characteristicsSchema,
+  'characteristics'
+);
+
+const CharacteristicView = mongoose.model(
+  'CharacteristicView',
+  CharacteristicViewSchema,
+  'characteristicView'
+);
+
+
+module.exports = {
+  Reviews,
+  ReviewsPhotos,
+  Characteristics,
+  CharacteristicView
+}
+
+// let Reviews = mongoose.model('Reviews', reviewsSchema);
