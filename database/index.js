@@ -37,13 +37,13 @@ const characteristicsSchema = new mongoose.Schema({
   "name" : String
 });
 
-const characteristicViewSchema = mongoose.model(
+const characteristicViewSchema = new mongoose.Schema({
   "_id" : String,
   "id" : Number,
   "characteristic_id" : Number,
   "review_id" : Number,
   "value" : Number
-);
+});
 
 //creating models for my four collections
 const Reviews = mongoose.model(
@@ -66,7 +66,7 @@ const Characteristics = mongoose.model(
 
 const CharacteristicView = mongoose.model(
   'CharacteristicView',
-  CharacteristicViewSchema,
+  characteristicViewSchema,
   'characteristicView'
 );
 

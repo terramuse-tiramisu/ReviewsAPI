@@ -2,7 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const app = express();
-
+// const models = require('../database/models');
+const reviewGetter = require('../database/models/reviewGetter');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -12,7 +13,9 @@ app.get('/', (req, res) => {
 
 
 
-app.get('/reviews', (req, res) => {
+app.get('/reviews/:productId', (req, res) => {
+  console.log('my get to review was hit. here is the prod id', req.params.productId);
+  reviewGetter(req.params.productId);
   res.send('hello from /reviews')
 })
 
