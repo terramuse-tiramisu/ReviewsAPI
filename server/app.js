@@ -13,9 +13,17 @@ app.get('/', (req, res) => {
 
 
 
-app.get('/reviews/:productId', (req, res) => {
-  console.log('my get to review was hit. here is the prod id', req.params.productId);
-  reviewGetter(req.params.productId);
+app.get('/reviews', (req, res) => {
+  // console.log('req.query.product_id', req.query.product_id);
+  // console.log('req.query.page', req.query.page);
+  // console.log('req.query.count', req.query.count);
+  // console.log('req.query.sort', req.query.sort);
+  const { product_id, page, count, sort} = req.query;
+  console.log('prod id after destructure', product_id);
+  // console.log('my get to review was hit. here is the prod id', req.params.productId);
+  // console.log('req.parms', req.params);
+  var noPhotos = reviewGetter(product_id, page, count, sort)
+  // console.log('noPhotos', noPhotos);
   res.send('hello from /reviews')
 })
 
