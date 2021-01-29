@@ -20,7 +20,7 @@ app.get('/reviews', (req, res) => {
   reviewGetter(product_id, page, count, sort)
     .then((resultPacket) => {
       console.log('resultPacket', resultPacket);
-      res.send('hello from /reviews')
+      res.send(resultPacket);
     })
     .catch((err)=>{
       console.error(err);
