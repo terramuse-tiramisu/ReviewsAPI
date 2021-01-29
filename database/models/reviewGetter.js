@@ -7,7 +7,7 @@ const {
   CharacteristicView
 } = require('../index');
 
-const reviewGetter = function(prodId, page = 1, count = 5, sort = 'helpful') {
+const reviewGetter = function(prodId, page = 1, count = 5, sort = 'helpfulness') {
   console.log('reviewGetter Called!, the prodID:', prodId);
   var packet = {
     product: parseInt(prodId),
@@ -15,7 +15,8 @@ const reviewGetter = function(prodId, page = 1, count = 5, sort = 'helpful') {
     count: parseInt(count),
     result: []
   };
-
+  var sortMethod = sort;
+  console.log('sortMethod', sortMethod);
   return Reviews.aggregate([
       {
         $match: {
@@ -23,7 +24,7 @@ const reviewGetter = function(prodId, page = 1, count = 5, sort = 'helpful') {
         }
       },
       {
-        '$lookup': {
+        $lookup: {
           'from': 'reviews_photos',
           'localField': 'id',
           'foreignField': 'review_id',
@@ -31,13 +32,33 @@ const reviewGetter = function(prodId, page = 1, count = 5, sort = 'helpful') {
         }
       },
       {
-        '$sample': {
-          'size': 3
+        $sort: {
+          'helpfulness' : -1
+        }
+      },
+      {
+        $sample: {
+          'size': packet.count
         }
       }
   ]).exec()
   .then((result) => {
-    console.log('pipeline result:', result);
+    // console.log('pipeline result:', result);
+    _.forEach(result, (review)=>{
+      packet.result.push({
+        'review_id': review.id,
+        'rating': review.rating,
+        'summary': review.summary,
+        'recommend': review.recommend,
+        'response': review.response,
+        'body': review.body,
+        'date': review.date,
+        'reviewer_name': review.reviewer_name,
+        'helpfulness': review.helpfulness,
+        'photos': review.photos
+      })
+    })
+    return packet;
   })
   .catch((err) => {
     console.log('err in reviewGetter.js', err)
