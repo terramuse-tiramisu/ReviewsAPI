@@ -51,9 +51,16 @@ app.put('/reviews/:review_id/helpful', (req, res) => {
     })
 })
 
-app.get('/reviews/:review_id/report', (req, res) => {
-  console.log('here is the review id:', req.params.review_id);
-  res.send('hello from PUT report')
+app.put('/reviews/:review_id/report', (req, res) => {
+  const { review_id } = req.params;
+  reportReview(review_id)
+  .then((results) => {
+    res.sendStatus(204);
+  })
+  .catch((err)=>{
+    console.error(err);
+    res.sendStatus(500);
+  })
 })
 
 module.exports = app;
