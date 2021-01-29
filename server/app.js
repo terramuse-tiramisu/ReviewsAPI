@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const app = express();
 // const models = require('../database/models');
 const reviewGetter = require('../database/models/reviewGetter');
+const reportReview = require('../database/models/reportReview');
+const markHelpful = require('../database/models/markHelpful');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -24,6 +26,7 @@ app.get('/reviews', (req, res) => {
     })
     .catch((err)=>{
       console.error(err);
+      res.sendStatus(500);
     })
 })
 
@@ -36,8 +39,16 @@ app.post('/reviews', (req, res) => {
 })
 
 app.put('/reviews/:review_id/helpful', (req, res) => {
-  console.log('here is the review id:', req.params.review_id);
-  res.send('hello from PUT helpful')
+  const { review_id } = req.params;
+  // console.log('helpful route, review_id', review_id);
+  markHelpful(review_id)
+    .then((results) => {
+      res.sendStatus(204);
+    })
+    .catch((err)=>{
+      console.error(err);
+      res.sendStatus(500);
+    })
 })
 
 app.get('/reviews/:review_id/report', (req, res) => {
