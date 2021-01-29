@@ -19,7 +19,7 @@ const reviewGetter = function(prodId, page = 1, count = 5, sort = 'helpful') {
   // var skipVal = packet.page * packet.count;
   getReviewDocs(packet.product)
     .then((data) => {
-      console.log('heres my data from getreviewDocs', data);
+      // console.log('heres my data from getreviewDocs', data);
       _.forEach(data, (review)=>{
         packet.result.push({
           "review_id": review.id,

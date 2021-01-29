@@ -20,11 +20,11 @@ app.get('/reviews', (req, res) => {
   reviewGetter(product_id, page, count, sort)
     .then((resultPacket) => {
       console.log('resultPacket', resultPacket);
+      res.send('hello from /reviews')
     })
-    .error((err)=>{
+    .catch((err)=>{
       console.error(err);
     })
-  res.send('hello from /reviews')
 })
 
 app.get('/reviews/meta', (req, res) => {

@@ -43,7 +43,7 @@ const reviewGetter = function(prodId, page = 1, count = 5, sort = 'helpfulness')
       }
   ]).exec()
   .then((result) => {
-    // console.log('pipeline result:', result);
+    console.log('pipeline result:', result);
     _.forEach(result, (review)=>{
       packet.result.push({
         'review_id': review.id,
@@ -58,11 +58,12 @@ const reviewGetter = function(prodId, page = 1, count = 5, sort = 'helpfulness')
         'photos': review.photos
       })
     })
-    return packet;
+    return result;
+
   })
-  .catch((err) => {
-    console.log('err in reviewGetter.js', err)
-  })
+  // .catch((err) => {
+  //   console.log('err in reviewGetter.js', err)
+  // })
 };
 
 
