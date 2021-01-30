@@ -23,8 +23,7 @@ const reviewsSchema = new mongoose.Schema({
   "helpfulness" : Number
 });
 
-const reviewsPhotosSchema = new mongoose.Schema({
-  "_id" : String,
+const reviewsPhotoSchema = new mongoose.Schema({
   "id" : Number,
   "review_id" : Number,
   "url" : String
@@ -52,9 +51,9 @@ const Review = mongoose.model(
   'reviews'
 );
 
-const ReviewsPhotos = mongoose.model(
-  'ReviewsPhotos',
-  reviewsPhotosSchema,
+const ReviewsPhoto = mongoose.model(
+  'ReviewsPhoto',
+  reviewsPhotoSchema,
   'reviewsPhotos'
 );
 
@@ -73,7 +72,7 @@ const CharacteristicView = mongoose.model(
 
 module.exports = {
   Review,
-  ReviewsPhotos,
+  ReviewsPhoto,
   Characteristics,
   CharacteristicView
 }

@@ -1,7 +1,7 @@
 var _ = require('lodash');
 const {
   Review,
-  ReviewsPhotos,
+  ReviewsPhoto,
   Characteristics,
   CharacteristicView
 } = require('../index');
@@ -29,6 +29,19 @@ const reviewSaver = function(reviewObj) {
     })
     .then((result)=>{
       console.log('this is what returns from insertOne', result);
+      _.forEach(reviewObj.photos, (photo) => {
+        ReviewsPhoto.find().estimatedDocumentCount().exec()
+        .then((photoID) => {
+          ReviewsPhoto.create({
+            id: photoID,
+            review_id: result.id,
+            url: photo
+          })
+        })
+        .then((photSub) => {
+          console.log('photoSub', photSub);
+        })
+      })
     })
 
 
