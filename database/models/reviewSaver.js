@@ -2,7 +2,7 @@ var _ = require('lodash');
 const {
   Review,
   ReviewsPhoto,
-  Characteristics,
+  Characteristic,
   CharacteristicView
 } = require('../index');
 
@@ -32,17 +32,25 @@ const reviewSaver = function(reviewObj) {
       _.forEach(reviewObj.photos, (photo) => {
         ReviewsPhoto.find().estimatedDocumentCount().exec()
         .then((photoID) => {
-          ReviewsPhoto.create({
+          return ReviewsPhoto.create({
             id: photoID,
             review_id: result.id,
             url: photo
           })
         })
         .then((photSub) => {
-          console.log('photoSub', photSub);
+          console.log('photoSub', photSub.review_id);
         })
       })
     })
+    .then(()=> {
+      return Characteristic.find({product_id: 14}).select({id: 1, _id: 0})
+    })
+    .then((charIdArr) => {
+      console.log('CharIdArr', charIdArr);
+    })
+  };
+
 
 
   //returns review_id
@@ -52,7 +60,6 @@ const reviewSaver = function(reviewObj) {
     //query Characteristics to get the IDs (characteristics) associated with this product
     //write to Characteristic_views, storing the characteristic ID, the review_id (coming from the firt insertion) and the values coming from reviewObj.characteristics
   //
-};
 
 
 module.exports = reviewSaver;
