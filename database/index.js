@@ -30,14 +30,14 @@ const reviewsPhotoSchema = new mongoose.Schema({
 });
 
 const characteristicSchema = new mongoose.Schema({
-  "_id" : String,
+  // "_id" : String,
   "id" : Number,
   "product_id" : Number,
   "name" : String
 });
 
 const characteristicViewSchema = new mongoose.Schema({
-  "_id" : String,
+  // "_id" : String,
   "id" : Number,
   "characteristic_id" : Number,
   "review_id" : Number,
@@ -66,7 +66,7 @@ const Characteristic = mongoose.model(
 const CharacteristicView = mongoose.model(
   'CharacteristicView',
   characteristicViewSchema,
-  'characteristicView'
+  'characteristicViews'
 );
 
 

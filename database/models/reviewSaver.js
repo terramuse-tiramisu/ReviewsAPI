@@ -9,11 +9,13 @@ const {
 const reviewSaver = function(reviewObj) {
   // console.log('reviewObj in reviewSaver', reviewObj);
   var today = new Date();
+  var realReviewId;
   Review.find().estimatedDocumentCount().exec()
     .then((count)=>{
       console.log('count', count);
+      realReviewId = count + 1;
       return Review.create({
-        id: count + 1,
+        id: realReviewId,
         product_id: reviewObj.product_id,
         rating: reviewObj.rating,
         date: today.toDateString(),
@@ -32,23 +34,47 @@ const reviewSaver = function(reviewObj) {
       _.forEach(reviewObj.photos, (photo) => {
         ReviewsPhoto.find().estimatedDocumentCount().exec()
         .then((photoID) => {
+          console.log('photoId', photoID);
+          console.log('result.id', result.id);
           return ReviewsPhoto.create({
             id: photoID,
             review_id: result.id,
             url: photo
           })
         })
-        .then((photSub) => {
-          console.log('photoSub', photSub.review_id);
-        })
       })
     })
-    .then(()=> {
-      return Characteristic.find({product_id: 14}).select({id: 1, _id: 0})
+    .then(()=>{
+      return CharacteristicView.find().estimatedDocumentCount().exec()
     })
-    .then((charIdArr) => {
-      console.log('CharIdArr', charIdArr);
+    .then((charViewId)=>{
+      console.log('CVI', charViewId);
+      _.forEach(reviewObj.characteristics, (key, val)=>{
+        CharacteristicView.create({
+          id: charViewId + 1,
+          characteristic_id : key,
+          review_id : realReviewId,
+          value : val
+        })
+        charViewId++;
+      })
     })
+
+    //get next available Characteristic_views.id value
+    //loop over reviewObj.characteristics
+      //for each, write to Characteristic_views collection
+      //next id value, characterviews.key, review id, charctervies.value
+    // .then(()=> {
+    //   return Characteristic.find({product_id: reviewObj.product_id}).select({id: 1, _id: 0})
+    // })
+    // .then((charIdArr) => {
+    //   // console.log('CharIdArr', charIdArr);
+    //   var trueArr = _.map(charIdArr, (val) => (
+    //     val.id
+    //   ))
+
+      // console.log('trueArr', trueArr);
+
   };
 
 
