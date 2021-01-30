@@ -46,8 +46,8 @@ const characteristicViewSchema = new mongoose.Schema({
 });
 
 //creating models for my four collections
-const Reviews = mongoose.model(
-  'Reviews',
+const Review = mongoose.model(
+  'Review',
   reviewsSchema,
   'reviews'
 );
@@ -72,7 +72,7 @@ const CharacteristicView = mongoose.model(
 
 
 module.exports = {
-  Reviews,
+  Review,
   ReviewsPhotos,
   Characteristics,
   CharacteristicView
