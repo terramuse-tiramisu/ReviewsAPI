@@ -7,6 +7,7 @@ const reviewGetter = require('../database/models/reviewGetter');
 const reportReview = require('../database/models/reportReview');
 const markHelpful = require('../database/models/markHelpful');
 const reviewSaver = require('../database/models/reviewSaver');
+const getMetaData = require('../database/models/getMetaData');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json())
@@ -33,21 +34,20 @@ app.get('/reviews', (req, res) => {
 })
 
 app.get('/reviews/meta', (req, res) => {
+  getMetaData(req.query.product_id);
   res.send('hello from /reviews/meta')
 })
 
 app.post('/reviews', (req, res) => {
   // console.log('req.body', req.body);
   reviewSaver(req.body)
-    // .then((results) => {
-    //   res.sendStatus(204);
-    // })
-    // .catch((err)=>{
-    //   console.error(err);
-    //   res.sendStatus(500);
-    // })
-
-  res.send('hello from /reviews (post)')
+    .then((results) => {
+      res.sendStatus(204);
+    })
+    .catch((err)=>{
+      console.error(err);
+      res.sendStatus(500);
+    })
 })
 
 app.put('/reviews/:review_id/helpful', (req, res) => {

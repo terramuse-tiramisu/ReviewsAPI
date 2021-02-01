@@ -10,7 +10,7 @@ const reviewSaver = function(reviewObj) {
   // console.log('reviewObj in reviewSaver', reviewObj);
   var today = new Date();
   var realReviewId;
-  Review.find().estimatedDocumentCount().exec()
+  return Review.find().estimatedDocumentCount().exec()
     .then((count)=>{
       console.log('count', count);
       realReviewId = count + 1;
@@ -60,32 +60,7 @@ const reviewSaver = function(reviewObj) {
       })
     })
 
-    //get next available Characteristic_views.id value
-    //loop over reviewObj.characteristics
-      //for each, write to Characteristic_views collection
-      //next id value, characterviews.key, review id, charctervies.value
-    // .then(()=> {
-    //   return Characteristic.find({product_id: reviewObj.product_id}).select({id: 1, _id: 0})
-    // })
-    // .then((charIdArr) => {
-    //   // console.log('CharIdArr', charIdArr);
-    //   var trueArr = _.map(charIdArr, (val) => (
-    //     val.id
-    //   ))
-
-      // console.log('trueArr', trueArr);
-
   };
-
-
-
-  //returns review_id
-  //_.forEach(reviewsObj.photos((photo)=>{
-    //Reviews_photos.save({review_id: reviewId, url: photo})
-  // }))
-    //query Characteristics to get the IDs (characteristics) associated with this product
-    //write to Characteristic_views, storing the characteristic ID, the review_id (coming from the firt insertion) and the values coming from reviewObj.characteristics
-  //
 
 
 module.exports = reviewSaver;
