@@ -54,7 +54,7 @@ const Review = mongoose.model(
 const ReviewsPhoto = mongoose.model(
   'ReviewsPhoto',
   reviewsPhotoSchema,
-  'reviewsPhotos'
+  'reviews_photos'
 );
 
 const Characteristic = mongoose.model(
@@ -66,7 +66,7 @@ const Characteristic = mongoose.model(
 const CharacteristicView = mongoose.model(
   'CharacteristicView',
   characteristicViewSchema,
-  'characteristicViews'
+  'characteristic_reviews'
 );
 
 
