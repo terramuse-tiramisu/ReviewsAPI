@@ -25,7 +25,7 @@ app.get('/reviews', (req, res) => {
   reviewGetter(product_id, page, count, sort)
     .then((resultPacket) => {
       console.log('resultPacket', resultPacket);
-      res.send(resultPacket);
+      res.sendStatus(200).send(resultPacket);
     })
     .catch((err)=>{
       console.error(err);
@@ -34,8 +34,15 @@ app.get('/reviews', (req, res) => {
 })
 
 app.get('/reviews/meta', (req, res) => {
-  getMetaData(req.query.product_id);
-  res.send('hello from /reviews/meta')
+  getMetaData(req.query.product_id)
+  .then((packet)=>{
+    console.log('packet to send to client', packet);
+    res.sendStatus(200).send(packet);
+  })
+  .catch((err)=>{
+    console.error(err);
+    res.sendStatus(500);
+  })
 })
 
 app.post('/reviews', (req, res) => {
