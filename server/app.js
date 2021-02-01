@@ -37,7 +37,7 @@ app.get('/reviews/meta', (req, res) => {
   getMetaData(req.query.product_id)
   .then((packet)=>{
     console.log('packet to send to client', packet);
-    res.sendStatus(200).send(packet);
+    res.send(packet);
   })
   .catch((err)=>{
     console.error(err);
