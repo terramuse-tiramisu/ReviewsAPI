@@ -35,14 +35,14 @@ app.get('/reviews', (req, res) => {
 
 app.get('/reviews/meta', (req, res) => {
   getMetaData(req.query.product_id)
-  .then((packet)=>{
-    console.log('packet to send to client', packet);
-    res.send(packet);
-  })
-  .catch((err)=>{
-    console.error(err);
-    res.sendStatus(500);
-  })
+    .then((results)=>{
+      console.log('packet to send to client', results);
+      res.send(results);
+    })
+    .catch((err)=>{
+      console.error(err);
+      res.sendStatus(500);
+    })
 })
 
 app.post('/reviews', (req, res) => {
