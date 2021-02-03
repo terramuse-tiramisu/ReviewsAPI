@@ -26,55 +26,61 @@ const getMetaData = async function(pid) {
     characteristics: {
     }
   };
-  //result is an array
-  result = await Review.aggregate([
-    {
-      $match: {
-        'product_id': 111
-      }
-    }, {
-      $project: {
-        'recommend': 1,
-        'rating': 1,
-        '_id': 0
-      }
-    }
-  ]);
-  console.log('my result', result);
-  _.forEach(result, (obj) => {
-    packet.ratings[obj.rating] += 1;
-    packet.recommended[obj.recommend] += 1
-  })
-  console.log('packet after blending in results', packet);
-  var ratingRecs = await Characteristic.find({product_id: pid}).select({ "id": 1, "name": 1, "_id": 0})
-  console.log('ratings and recs', ratingRecs);
-  _.forEach((ratingRecs), (obj) => {
-    packet.characteristics[obj.name] = {
-      id: obj.id,
-      value: 0
-    }
-  })
-  console.log('packet after populating chars', packet);
-  for (var key in packet.characteristics) {
-    var [average] = await CharacteristicView.aggregate([
+  try {
+    //result is an array of objects (one per review for this product), each one representing the rating and recommend value
+    result = await Review.aggregate([
       {
         $match: {
-          'characteristic_id': packet.characteristics[key].id
+          'product_id': 111
         }
       }, {
-        $group: {
-          '_id': null,
-          'averageScore': {
-            $avg: '$value'
-          }
+        $project: {
+          'recommend': 1,
+          'rating': 1,
+          '_id': 0
         }
       }
-    ])
-    console.log('average', average);
-    packet.characteristics[key].value = average.averageScore.toFixed(4);;
+    ]);
+    //loop thru this array, update the packet for this products meta data
+    _.forEach(result, (obj) => {
+      packet.ratings[obj.rating] += 1;
+      packet.recommended[obj.recommend] += 1
+    })
+    //an array of objects, each object contains the charcteristic_id and name of that characteristic. Each product has b/t 1-5 chars
+    var charsArr = await Characteristic.find({product_id: pid}).select({ "id": 1, "name": 1, "_id": 0})
+    _.forEach((charsArr), (obj) => {
+      packet.characteristics[obj.name] = {
+        id: obj.id,
+        value: 0
+      }
+    })
+    console.log('packet after populating chars', packet);
+    //loop through all the characteristics loaded in the packet
+    //get the id for each char, then get the average value for it
+    for (var key in packet.characteristics) {
+      var [average] = await CharacteristicView.aggregate([
+        {
+          $match: {
+            'characteristic_id': packet.characteristics[key].id
+          }
+        }, {
+          $group: {
+            '_id': null,
+            'averageScore': {
+              $avg: '$value'
+            }
+          }
+        }
+      ])
+      console.log('average', average);
+      //put it in the packet
+      packet.characteristics[key].value = average.averageScore.toFixed(4);;
+    }
+    console.log('packet after avearges added', packet);
+    return packet;
+  } catch(e) {
+    console.log(e);
   }
-  console.log('packet after avearges added', packet);
-  return packet;
 
 };
 

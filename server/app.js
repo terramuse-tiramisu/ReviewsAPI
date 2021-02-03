@@ -49,7 +49,7 @@ app.post('/reviews', (req, res) => {
   // console.log('req.body', req.body);
   reviewSaver(req.body)
     .then((results) => {
-      res.sendStatus(204);
+      res.sendStatus(201);
     })
     .catch((err)=>{
       console.error(err);

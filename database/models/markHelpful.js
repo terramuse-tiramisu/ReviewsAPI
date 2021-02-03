@@ -1,6 +1,6 @@
 var _ = require('lodash');
 const {
-  Reviews,
+  Review,
   ReviewsPhotos,
   Characteristics,
   CharacteristicView
@@ -8,7 +8,7 @@ const {
 
 const markHelpful = function(review_id) {
   // console.log('MH, in the file of the same name, got called', review_id);
-  return Reviews.findOneAndUpdate({id: review_id},
+  return Review.findOneAndUpdate({id: review_id},
     {$inc: {'helpfulness': 1}}
     )
     .exec()

@@ -1,13 +1,13 @@
 var _ = require('lodash');
 const {
-  Reviews,
+  Review,
   ReviewsPhotos,
   Characteristics,
   CharacteristicView
 } = require('../index');
 
 const reportReview = function(review_id) {
-  return Reviews.findOneAndUpdate({id: review_id},
+  return Review.findOneAndUpdate({id: review_id},
     {'reported': 'true'}
     )
     .exec()

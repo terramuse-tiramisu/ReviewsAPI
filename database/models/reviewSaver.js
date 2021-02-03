@@ -48,7 +48,7 @@ const reviewSaver = function(reviewObj) {
       return CharacteristicView.find().estimatedDocumentCount().exec()
     })
     .then((charViewId)=>{
-      console.log('CVI', charViewId);
+      // console.log('CVI', charViewId);
       _.forEach(reviewObj.characteristics, (key, val)=>{
         CharacteristicView.create({
           id: charViewId + 1,
