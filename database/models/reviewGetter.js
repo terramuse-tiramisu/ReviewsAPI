@@ -1,9 +1,9 @@
 //write and export a function that reaches into the collections it needs to and sends it back
 var _ = require('lodash');
 const {
-  Reviews,
-  ReviewsPhotos,
-  Characteristics,
+  Review,
+  ReviewsPhoto,
+  Characteristic,
   CharacteristicView
 } = require('../index');
 
@@ -17,7 +17,7 @@ const reviewGetter = function(prodId, page = 1, count = 5, sort = 'helpfulness')
   };
   var sortMethod = sort;
   console.log('sortMethod', sortMethod);
-  return Reviews.aggregate([
+  return Review.aggregate([
       {
         $match: {
           'product_id': packet.product

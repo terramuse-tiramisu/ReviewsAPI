@@ -12,7 +12,7 @@ services:
    - CONNECTIONSTRING=mongodb://mongo:27017/notes
   volumes:
    - ./:/code
-  command: npm run debug
+  command: npm run start
 
  mongo:
   image: mongo:4.2.8

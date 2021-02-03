@@ -20,12 +20,12 @@ app.get('/', (req, res) => {
 
 app.get('/reviews', (req, res) => {
   const { product_id, page, count, sort} = req.query;
-  console.log('prod id after destructure', product_id);
+  // console.log('prod id after destructure', product_id);
 
   reviewGetter(product_id, page, count, sort)
     .then((resultPacket) => {
-      console.log('resultPacket', resultPacket);
-      res.sendStatus(200).send(resultPacket);
+      // console.log('resultPacket', resultPacket);
+      res.status(200).send(resultPacket);
     })
     .catch((err)=>{
       console.error(err);
@@ -36,8 +36,8 @@ app.get('/reviews', (req, res) => {
 app.get('/reviews/meta', (req, res) => {
   getMetaData(req.query.product_id)
     .then((results)=>{
-      console.log('packet to send to client', results);
-      res.send(results);
+      // console.log('packet to send to client', results);
+      res.status(200).send(results);
     })
     .catch((err)=>{
       console.error(err);

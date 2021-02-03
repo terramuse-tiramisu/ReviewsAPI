@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const URL = 'mongodb://localhost/reviews';
+const URL = 'mongodb://localhost/test';
 
 const db = mongoose.connection;
 
@@ -53,3 +53,25 @@ testData.save((err, res) => {
   if (err) throw err;
   console.log("Successfully added to db!");
 });
+// const reviews_meta = new Schema({
+//   product_id: Number,
+//   ratings: {
+//     “1”: Number,
+//     “2”: Number,
+//     “3”: Number,
+//     “4”: Number,
+//     “5”: Number
+//   },
+//   recommend:  {
+//           0: Number,
+//           1: Number
+//   },
+//   characteristics: {
+//     Size: {id: Number, value: Number},
+//     Width: {id: Number, value: Number},
+//     Comfort: {id: Number, value: Number},
+//     Quality: {id: Number, value: Number},
+//     Length: {id: Number, value: Number},
+//             Fit: {id: Number, value: Number}
+//   },
+// });
