@@ -6,3 +6,5 @@ reviews_photos.csv
 reviews.csv
 
 .env
+
+dump/test
